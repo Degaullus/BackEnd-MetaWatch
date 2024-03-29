@@ -1,9 +1,9 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, Document } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 
 // this is necessary for ts to recognize the type
-interface IUser {
+interface IUser extends Document {
   username: string;
   email: string;
   password: string;

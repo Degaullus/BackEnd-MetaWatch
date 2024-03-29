@@ -1,10 +1,13 @@
-// Imports
+// Immport of dependencies
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import 'colors';
 import { connectDB } from './dbinit'; // Adjusted import to match TypeScript
+
+// Import of Routes
 import userRoute from './routes/userRoute';
+import userAuth from './routes/userAuth';
 
 // Config
 dotenv.config();
@@ -21,8 +24,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-
 app.use('/users', userRoute)
+app.use('/', userAuth)
 
 app.get('/', (req, res) => {
     res.send('Hello World');
