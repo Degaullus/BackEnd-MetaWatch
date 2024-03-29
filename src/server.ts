@@ -21,10 +21,12 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+
+app.use('/users', userRoute)
+
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-app.use('/users', userRoute)
 
 app.all('*', (req, res) => {
 	res.redirect('/');
