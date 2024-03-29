@@ -26,8 +26,8 @@ app.get('/', (req, res) => {
 });
 app.use('/users', userRoute)
 
-app.all("*", (req, res) => {
-	res.redirect("/");
+app.all('*', (req, res) => {
+	res.redirect('/');
 });
 
 // Start server
