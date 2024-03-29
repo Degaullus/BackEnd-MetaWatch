@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import { User } from '../schemas/User';
 
@@ -6,25 +7,35 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, password } = req.body;
     const user = new User({ name, email, password });
+    await user.save();
     
     // Corrected the response method to set status before sending JSON
     res.status(201).json({
       message: "User created successfully",
       data: user,
     });
-  } catch (error) {
-    // Improved error handling with type checking
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: error.message,
+  } catch (error: any) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      // This block handles validation errors
+      let messages = Object.values(error.errors).map((val:any) => val.message);
+      res.status(400).json({
+        message: "Validation error",
+        errors: messages
+      });
+    } else if (error.code && error.code === 11000) {
+      // This block catches duplicate key errors, e.g., a duplicate email
+      res.status(400).json({
+        message: "Duplicate field value entered",
+        field: Object.keys(error.keyValue)[0],
       });
     } else {
+      // General error fallback
       res.status(500).json({
-        message: "An unknown error occurred",
+        message: error.message || "An unknown error occurred",
       });
     }
   }
-}
+};
 
 const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {

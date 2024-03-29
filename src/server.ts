@@ -2,19 +2,18 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import colors from 'colors';
+import 'colors';
 import { connectDB } from './dbinit'; // Adjusted import to match TypeScript
 import userRoute from './routes/userRoute';
 
 // Config
 dotenv.config();
-require('colors');
 
 // Initialize express app
 const app = express();
 
 // Constants
-const PORT: number | string = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.json());
@@ -30,5 +29,5 @@ app.use('/users', userRoute)
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`.yellow.bold);
-    connectDB();
+    connectDB().catch(err => console.error(err)); // Added catch for error handling
 });
