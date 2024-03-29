@@ -1,4 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 // this is necessary for ts to recognize the type
 interface IUser {
@@ -6,6 +8,11 @@ interface IUser {
   email: string;
   password: string;
   date: Date;
+}
+
+interface IUuserModel extends Model<IUser> {
+  signup(email: string, password: string): Promise<IUser>;
+  login(email: string, password: string): Promise<IUser>;
 }
 
 // Define the User schema using the interface
@@ -29,6 +36,8 @@ const UserSchema = new mongoose.Schema<IUser>({
     default: Date.now
   }
 });
+
+
 
 // Create and export the model
 export const User = mongoose.model<IUser>('User', UserSchema);
