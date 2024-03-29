@@ -30,4 +30,5 @@ app.use('/users', userRoute)
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`.yellow.bold);
+    connectDB();
 });
