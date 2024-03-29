@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Request, Response } from 'express';
-import { User } from '../schemas/User';
+import User from '../schemas/User';
 
 // Create a new user
 const createUser = async (req: Request, res: Response): Promise<void> => {
