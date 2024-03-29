@@ -28,6 +28,7 @@ app.use('/users', userRoute)
 
 app.all('*', (req, res) => {
 	res.redirect('/');
+    res.send('we are trying to meet your request, give us a moment')
 });
 
 // Start server

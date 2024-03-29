@@ -15,18 +15,9 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
       data: user,
     });
   } catch (error: any) {
-    if (error instanceof mongoose.Error.ValidationError) {
-      // This block handles validation errors
-      let messages = Object.values(error.errors).map((val:any) => val.message);
+    if (error.code === 11000) {
       res.status(400).json({
-        message: "Validation error",
-        errors: messages
-      });
-    } else if (error.code && error.code === 11000) {
-      // This block catches duplicate key errors, e.g., a duplicate email
-      res.status(400).json({
-        message: "Duplicate field value entered",
-        field: Object.keys(error.keyValue)[0],
+        message: "Email already in use",
       });
     } else {
       // General error fallback
