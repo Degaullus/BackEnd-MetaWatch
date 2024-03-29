@@ -5,6 +5,7 @@ interface IUser {
   username: string;
   email: string;
   password: string;
+  date: Date;
 }
 
 // Define the User schema using the interface
@@ -22,11 +23,11 @@ const UserSchema = new mongoose.Schema<IUser>({
   password: {
     type: String,
     required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
-  // date: {
-  //   type: Date,
-  //   default: Date.now
-  // }
 });
 
 // Create and export the model
