@@ -26,6 +26,10 @@ app.get('/', (req, res) => {
 });
 app.use('/users', userRoute)
 
+app.all("*", (req, res) => {
+	res.redirect("/");
+});
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`.yellow.bold);
