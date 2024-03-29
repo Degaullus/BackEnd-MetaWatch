@@ -1,18 +1,17 @@
 import mongoose from 'mongoose';
 
-// Define an interface for the User document
+// this is necessary for ts to recognize the type
 interface IUser {
-  name: string;
+  username: string;
   email: string;
   password: string;
-  date?: Date; // Optional because it has a default value
-  ipaddress: string;
 }
 
 // Define the User schema using the interface
 const UserSchema = new mongoose.Schema<IUser>({
-  name: {
+  username: {
     type: String,
+
     required: true
   },
   email: {

@@ -5,8 +5,8 @@ import { User } from '../schemas/User';
 // Create a new user
 const createUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { name, email, password } = req.body;
-    const user = new User({ name, email, password });
+    const { username, email, password } = req.body;
+    const user = new User({ username, email, password });
     await user.save();
     
     // Corrected the response method to set status before sending JSON
@@ -40,6 +40,7 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
 const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await User.find();
+    const userCount = await User.countDocuments();
     if (!users.length) {
       res.status(404).json({
         message: "No users found",
@@ -47,7 +48,7 @@ const getAllUsers = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     res.status(200).json({
-      message: "Users retrieved successfully",
+      message: `Total users: ${userCount}`,
       data: users,
     });
   } catch (error) {
