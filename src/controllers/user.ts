@@ -26,4 +26,30 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { createUser };
+const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const users = await User.find();
+    if (!users.length) {
+      res.status(404).json({
+        message: "No users found",
+      });
+      return;
+    }
+    res.status(200).json({
+      message: "Users retrieved successfully",
+      data: users,
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    } else {
+      res.status(500).json({
+        message: "An unknown error occurred",
+      });
+    }
+  }
+}
+
+export { createUser, getAllUsers };

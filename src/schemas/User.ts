@@ -23,15 +23,11 @@ const UserSchema = new mongoose.Schema<IUser>({
   password: {
     type: String,
     required: true
-  },
-  date: {
-    type: Date,
-    default: Date.now
-  },
-  ipaddress: {
-    type: String,
-    required: true
   }
+  // date: {
+  //   type: Date,
+  //   default: Date.now
+  // }
 });
 
 // Create and export the model

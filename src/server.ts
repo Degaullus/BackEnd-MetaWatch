@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import { connectDB } from './dbinit'; // Adjusted import to match TypeScript
+import userRoute from './routes/userRoute';
 
 // Config
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
+app.use('/users', userRoute)
 
 // Start server
 app.listen(PORT, () => {

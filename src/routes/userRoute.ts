@@ -2,12 +2,14 @@ import express from "express";
 
 import {
   createUser,
+  getAllUsers
 } from "../controllers/user";
 
-const api = express.Router()
+const userRoute = express.Router()
 
-api
+userRoute
 	.route("/")
+  .get(getAllUsers)
   .post(createUser);
 	
-export default api;
+export default userRoute;
