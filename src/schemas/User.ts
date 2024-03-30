@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 // this is necessary for ts to recognize the type
 interface IUser extends Document {
-  username: string;
+  // username: string;
   email: string;
   password: string;
   date: Date;
@@ -17,11 +17,11 @@ interface IUserModel extends Model<IUser> {
 
 // Define the User schema using the interface
 const userSchema = new mongoose.Schema<IUser>({
-  username: {
-    type: String,
+  // username: {
+  //   type: String,
 
-    required: true
-  },
+  //   required: true
+  // },
   email: {
     type: String,
     required: true,

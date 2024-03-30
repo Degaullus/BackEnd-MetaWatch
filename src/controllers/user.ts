@@ -3,30 +3,30 @@ import { Request, Response } from 'express';
 import User from '../schemas/User';
 
 // Create a new user
-const createUser = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { username, email, password } = req.body;
-    const user = new User({ username, email, password });
-    await user.save();
+// const createUser = async (req: Request, res: Response): Promise<void> => {
+//   try {
+//     const { username, email, password } = req.body;
+//     const user = new User({ username, email, password });
+//     await user.save();
     
-    // Corrected the response method to set status before sending JSON
-    res.status(201).json({
-      message: "User created successfully",
-      data: user,
-    });
-  } catch (error: any) {
-    if (error.code === 11000) {
-      res.status(400).json({
-        message: "Email already in use",
-      });
-    } else {
-      // General error fallback
-      res.status(500).json({
-        message: error.message || "An unknown error occurred",
-      });
-    }
-  }
-};
+//     // Corrected the response method to set status before sending JSON
+//     res.status(201).json({
+//       message: "User created successfully",
+//       data: user,
+//     });
+//   } catch (error: any) {
+//     if (error.code === 11000) {
+//       res.status(400).json({
+//         message: "Email already in use",
+//       });
+//     } else {
+//       // General error fallback
+//       res.status(500).json({
+//         message: error.message || "An unknown error occurred",
+//       });
+//     }
+//   }
+// };
 
 const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -55,4 +55,4 @@ const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-export { createUser, getAllUsers };
+export { getAllUsers };
