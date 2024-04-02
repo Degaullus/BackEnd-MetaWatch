@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { getAllUsers } = require("../controllers/user");
+const { getAllUsers } = require("../controllers/getUser");
 
 const app = express.Router(); 
 

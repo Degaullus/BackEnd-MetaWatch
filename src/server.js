@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 });
 app.all('*', (req, res) => {
     res.send('we are trying to meet your request, give us a moment');
-    res.redirect('/');
+    // res.redirect('/');
 });
 
 // Start server
