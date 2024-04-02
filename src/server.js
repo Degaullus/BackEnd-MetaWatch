@@ -1,16 +1,19 @@
-// Immport of dependencies
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import 'colors';
-import { connectDB } from './dbinit'; // Adjusted import to match TypeScript
 
-// Import of Routes
-import userRoute from './routes/userRoute';
-import userAuth from './routes/userAuth';
-
+// Import of dependencies
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
 // Config
 dotenv.config();
+
+require("colors");
+
+const connectDB = require("./dbinit"); // Adjusted import to match TypeScript
+
+// Import of Routes
+const userRoute = require("./routes/userRoute");
+const userAuth = require("./routes/userAuth");
+
 
 // Initialize express app
 const app = express();
@@ -24,16 +27,14 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/users', userRoute)
-app.use('/', userAuth)
-
+app.use('/users', userRoute);
+app.use('/', userAuth);
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-
 app.all('*', (req, res) => {
-	res.redirect('/');
-    res.send('we are trying to meet your request, give us a moment')
+    res.send('we are trying to meet your request, give us a moment');
+    // res.redirect('/');
 });
 
 // Start server
