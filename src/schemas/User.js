@@ -24,7 +24,8 @@ const favoriteSchema = new mongoose.Schema({
     }],
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        default: []
     }
 });
 
@@ -43,12 +44,16 @@ userSchema.statics.signup = async function(email, password) {
         throw new Error("Invalid Email");
     }
     
-    // Fixed the check to correctly throw an error if the password is NOT strong
-    if (!validator.isStrongPassword(password, {
-        minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1
-    })) {
-        throw new Error("Make sure to use at least 8 characters, one upper case, one lower case, a number, a symbol");
+    // if (!validator.isStrongPassword(password, {
+    //     minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1
+    // })) {
+    //     throw new Error("Make sure to use at least 8 characters, one upper case, one lower case, a number, a symbol");
+    // }
+
+    if (password.length < 6) { // Example: only check for a minimum length of 6 characters
+        throw new Error("Password must be at least 6 characters long");
     }
+
     const salt = await bcrypt.genSalt(10);
     
     const hash = await bcrypt.hash(password, salt);
@@ -78,5 +83,7 @@ userSchema.statics.login = async function(email, password) {
     return user;
 }
 
-module.exports = mongoose.model("User", userSchema);
-module.exports = mongoose.model("Favorite", favoriteSchema);
+module.exports = {
+    User: mongoose.model("User", userSchema),
+    Favorite: mongoose.model("Favorite", favoriteSchema)
+};
