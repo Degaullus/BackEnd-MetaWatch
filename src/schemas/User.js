@@ -18,6 +18,16 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+const favoriteSchema = new mongoose.Schema({
+    list: [{
+        type: String,
+    }],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
+});
+
 // to create a new method for the signup
 userSchema.statics.signup = async function(email, password) {
     const exists = await this.findOne({ email }); // Fixed method call
@@ -69,3 +79,4 @@ userSchema.statics.login = async function(email, password) {
 }
 
 module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Favorite", favoriteSchema);
