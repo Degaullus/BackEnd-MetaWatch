@@ -1,3 +1,4 @@
 .env
-
+init-mongo.js/
+mongo-volume/
 node_modules
