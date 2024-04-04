@@ -22,10 +22,10 @@ const getOneUser = async (req, res) => {
     }
 };
 
-const getAllUsers = (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
-        const users = User.find().populate('favorites');
-        const userCount = User.countDocuments();
+        const users = await User.find().populate('favorites');
+        const userCount = await User.countDocuments();
         if (!users.length) {
             res.status(404).json({
                 message: "No users found",
