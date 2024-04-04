@@ -29,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/users', userRoute);
+app.use('/favorites', favRoute);
 app.use('/', userAuth);
 app.get('/', (req, res) => {
     res.send('Hello World');
