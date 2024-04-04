@@ -83,6 +83,18 @@ userSchema.statics.login = async function(email, password) {
     return user;
 }
 
+userSchema.methods.addFavorite = async function(newFavorite) {
+    const isAlreadyFavorite = this.favorites.some(fav => fav.equals(newFavorite));
+    if (!isAlreadyFavorite) {
+        this.favorites.push(newFavorite);
+        await this.save();
+        return { message: "Added to favorites successfully." };
+    } else {
+        return { message: "Already in favorites, try adding another list." };
+    
+    }
+}
+
 module.exports = {
     User: mongoose.model("User", userSchema),
     Favorite: mongoose.model("Favorite", favoriteSchema)
