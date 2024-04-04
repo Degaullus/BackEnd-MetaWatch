@@ -3,7 +3,7 @@ const { User } = require("../schemas/User");
 const addFavorite = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { favoriteId } = req.body;
+        const { addedFavorite } = req.body;
 
         const user = await User.findById(userId);
         if (!user) {
@@ -12,7 +12,7 @@ const addFavorite = async (req, res) => {
             });
         }
         
-        const result = await user.addFavorite(favoriteId);
+        const result = await user.addFavorite(addedFavorite);
         return res.status(200).json(result);
     } catch (error) {
         res.status(500).json({
@@ -25,7 +25,7 @@ const addFavorite = async (req, res) => {
 const remFavorite = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { favoriteId } = req.body;
+        const { removedFavorite } = req.body;
 
         const user = await User.findById(userId);
         if (!user) {
@@ -34,7 +34,7 @@ const remFavorite = async (req, res) => {
             });
         }
 
-        const result = await user.remFavorite(favoriteId);
+        const result = await user.remFavorite(removedFavorite);
         return res.status(200).json(result);
     } catch (error) {
         res.status(500).json({

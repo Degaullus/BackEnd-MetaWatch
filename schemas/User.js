@@ -83,10 +83,10 @@ userSchema.statics.login = async function(email, password) {
     return user;
 }
 
-userSchema.methods.addFavorite = async function(newFavorite) {
-    const isAlreadyFavorite = this.favorites.some(fav => fav.equals(newFavorite));
+userSchema.methods.addFavorite = async function(addedFavorite) {
+    const isAlreadyFavorite = this.favorites.some(fav => fav.equals(addedFavorite));
     if (!isAlreadyFavorite) {
-        this.favorites.push(newFavorite);
+        this.favorites.push(addedFavorite);
         await this.save();
         return { message: "Added to favorites successfully." };
     } else {
@@ -95,9 +95,9 @@ userSchema.methods.addFavorite = async function(newFavorite) {
     }
 }
 
-userSchema.methods.remFavorite = async function(newFavorite) {
+userSchema.methods.remFavorite = async function(removedFavorite) {
     const favoritesBefore = this.favorites.length;
-    this.favorites = this.favorites.filter(fav => !fav.equals(newFavorite));
+    this.favorites = this.favorites.filter(fav => !fav.equals(removedFavorite));
     if (favoritesBefore === this.favorites.length) {
         return { message: "Favorite not found." };
     } else {
