@@ -90,9 +90,20 @@ userSchema.methods.addFavorite = async function(newFavorite) {
         await this.save();
         return { message: "Added to favorites successfully." };
     } else {
-        return { message: "Already in favorites, try adding another list." };
+        return { message: "Already in favorites, try adding another one." };
     
     }
+}
+
+userSchema.methods.remFavorite = async function(newFavorite) {
+    const favoritesBefore = this.favorites.length;
+    this.favorites = this.favorites.filter(fav => !fav.equals(newFavorite));
+    if (favoritesBefore === this.favorites.length) {
+        return { message: "Favorite not found." };
+    } else {
+        await this.save();
+        return { message: "Removed from favorites successfully." };
+    
 }
 
 module.exports = {
