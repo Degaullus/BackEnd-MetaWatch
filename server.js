@@ -11,6 +11,7 @@ require("colors");
 const connectDB = require("./dbinit"); // Adjusted import to match TypeScript
 
 // Import of Routes
+const favRoute = require("./routes/favRoute");
 const userRoute = require("./routes/userRoute");
 const userAuth = require("./routes/userAuth");
 
