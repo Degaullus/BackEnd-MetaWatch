@@ -93,7 +93,7 @@ userSchema.methods.addFavorite = async function(addedFavorite) {
         return { message: "Already in favorites, try adding another one." };
     
     }
-}
+};
 
 userSchema.methods.remFavorite = async function(removedFavorite) {
     const favoritesBefore = this.favorites.length;

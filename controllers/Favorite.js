@@ -42,3 +42,5 @@ const remFavorite = async (req, res) => {
         });
     }
 };
+
+module.exports = { addFavorite, remFavorite };
