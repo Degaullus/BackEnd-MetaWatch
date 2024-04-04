@@ -103,8 +103,8 @@ userSchema.methods.remFavorite = async function(removedFavorite) {
     } else {
         await this.save();
         return { message: "Removed from favorites successfully." };
-    
-}
+    }
+};
 
 module.exports = {
     User: mongoose.model("User", userSchema),
