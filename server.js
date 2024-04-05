@@ -7,7 +7,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 require("colors");
-
 const connectDB = require("./dbinit"); // Adjusted import to match TypeScript
 
 // Import of Routes
@@ -16,11 +15,23 @@ const userRoute = require("./routes/userRoute");
 const userAuth = require("./routes/userAuth");
 const DBRoute = require("./routes/DBRoute");
 
+// SVG
+const emojiFaviconSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <text y=".9em" font-size="90">😊</text>
+</svg>`;
+
 // Initialize express app
 const app = express();
 
 // Constants
 const PORT = process.env.PORT || 8080;
+
+//Favicon
+app.get('/favicon.ico', (req, res) => {
+    res.type('image/svg+xml');
+    res.send(emojiFaviconSVG);
+});
 
 // Middleware
 app.use(express.json());
