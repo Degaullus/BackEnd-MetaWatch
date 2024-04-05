@@ -11,6 +11,7 @@ require("colors");
 const connectDB = require("./dbinit"); // Adjusted import to match TypeScript
 
 // Import of Routes
+const favRoute = require("./routes/favRoute");
 const userRoute = require("./routes/userRoute");
 const userAuth = require("./routes/userAuth");
 
@@ -28,7 +29,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/users', userRoute);
+app.use('/favorites', favRoute);
 app.use('/', userAuth);
+
+// Default routes
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
