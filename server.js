@@ -14,7 +14,7 @@ const connectDB = require("./dbinit"); // Adjusted import to match TypeScript
 const favRoute = require("./routes/favRoute");
 const userRoute = require("./routes/userRoute");
 const userAuth = require("./routes/userAuth");
-
+const DBRoute = require("./routes/DBRoute");
 
 // Initialize express app
 const app = express();
@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/users', userRoute);
 app.use('/favorites', favRoute);
+app.use('/db', DBRoute);
 app.use('/', userAuth);
 
 // Default routes
