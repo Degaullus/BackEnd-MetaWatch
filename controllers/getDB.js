@@ -5,7 +5,6 @@ const getDB = async (req, res) => {
     const db = await mongoose.connection.db.collection('tournamentData');
     const data = await db.find({}).toArray();
     res.status(200).json({
-      message: "Data retrieved",
       data: data
     });
 
@@ -16,4 +15,4 @@ const getDB = async (req, res) => {
   }
 }
 
-module.exports = { getDB} ;
+module.exports = { getDB };
