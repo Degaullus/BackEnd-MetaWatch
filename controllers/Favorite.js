@@ -68,4 +68,4 @@ const remFavorite = async (req, res) => {
     }
 };
 
-module.exports = { addFavorite, remFavorite };
+module.exports = { getFavorite, addFavorite, remFavorite };
