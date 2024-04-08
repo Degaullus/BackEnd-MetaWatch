@@ -10,10 +10,10 @@ require("colors");
 const connectDB = require("./dbinit"); // Adjusted import to match TypeScript
 
 // Import of Routes
-const favRoute = require("./Users/routes/favRoute");
-const userRoute = require("./Users/routes/userRoute");
-const userAuth = require("./Users/routes/userAuth");
-const DBRoute = require("./Users/routes/DBRoute");
+const favRoute = require("./users/routes/favRoute");
+const userRoute = require("./users/routes/userRoute");
+const userAuth = require("./users/routes/userAuth");
+const DBRoute = require("./users/routes/DBRoute");
 
 // SVG
 const emojiFaviconSVG = `
