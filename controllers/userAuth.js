@@ -14,16 +14,14 @@ const loginUser = async (req, res) => {
 		const user = await User.login(email, password);
 		const token = createToken(user._id)
 
-		const favorites = await Promise.all(
-			user.favorites.map(favId => 
-					Favorite.findById(favId).exec()
-			)
-	);
-		const validFavorites = favorites.filter(fav => fav !== null);
-		const favCount = favorites.length;
-		console.log(validFavorites)
+		await user.populate('favorites').execPopulate();
+		const favoriteTournamentIds = user.favorites.map(fav => fav._id.toString());
+
+		
+		const favCount = user.favorites.length;
+		console.log(favoriteTournamentIds)
 			
-		res.status(200).json({email, token, favCount, favorites: validFavorites, message: "logged in"})
+		res.status(200).json({email, token, favCount, favorites: favoriteTournamentIds, message: "logged in"})
 	} catch (error) {
 		res.status(400).json({ error: error.message })
 	}
