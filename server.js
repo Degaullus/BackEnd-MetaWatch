@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/users', userRoute);
-app.use('/favorites', favRoute);
+app.use('/fav', favRoute);
 app.use('/db', DBRoutes);
 app.use('/', userAuth);
 
