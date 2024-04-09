@@ -11,15 +11,23 @@ const loginUser = async (req, res) => {
 	
 	try {
 		const { email, password } = req.body
-		const user = await User.login(email, password);
-		const token = createToken(user._id)
 
-		await user.populate('favorites').execPopulate();
-		const favoriteTournamentIds = user.favorites.map(fav => fav._id.toString());
+		const userVerification = await User.login(email, password); // Verify user's email and password
+		if (!userVerification) {
+				throw new Error('Authentication failed');
+		}
+		const userWithFavorites = await User.findOne({ email }).populate('favorites');
 
-		
-		const favCount = user.favorites.length;
-		console.log(favoriteTournamentIds)
+		if (!userWithFavorites) {
+			throw new Error('User not found');
+	}
+
+	const token = createToken(userWithFavorites._id);
+
+	// Mapping through favorites to get tournament IDs if needed
+	const favoriteTournamentIds = userWithFavorites.favorites.map(fav => fav._id.toString());
+	
+	const favCount = userWithFavorites.favorites.length;
 			
 		res.status(200).json({email, token, favCount, favorites: favoriteTournamentIds, message: "logged in"})
 	} catch (error) {
