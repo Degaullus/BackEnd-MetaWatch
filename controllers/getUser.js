@@ -2,23 +2,25 @@ const { User } = require ("../schemas/User");
 
 const getOneUser = async (req, res) => {
     try {
-        const userId = req.params.id; // Assuming the user ID is passed as part of the URL parameters
-        const user = await User.findById(userId).populate('favorites');
+        const userId = req.params.id;
+        let query = User.findById(userId);
+        if (req.query.includeFavorites === 'true') {
+            query = query.populate('favorites');
+        }
+        const user = await query;
 
         if (!user) {
-            return res.status(404).json({
-                message: "User not found",
-            });
+            return res.status(404).json({ message: "User not found" });
         }
 
-        res.status(200).json({
-            message: "User found",
-            data: user,
-        });
+        const responseData = { message: "User found", data: user };
+        if (req.query.includeFavorites === 'true') {
+            responseData.favorites = user.favorites;
+        }
+
+        res.status(200).json(responseData);
     } catch (error) {
-        res.status(500).json({
-            message: error.message || "An unknown error occurred",
-        });
+        res.status(500).json({ message: error.message || "An unknown error occurred" });
     }
 };
 
