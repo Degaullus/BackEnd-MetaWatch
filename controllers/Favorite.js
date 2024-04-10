@@ -36,7 +36,7 @@ const addFavorite = async (req, res) => {
         }
         
         const result = await user.addFavorite(addedFavorite);
-        console.log(result);
+        // console.log(result);
         return res.status(200).json(result);
     } catch (error) {
         res.status(500).json({
