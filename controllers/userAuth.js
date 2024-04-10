@@ -38,12 +38,12 @@ const loginUser = async (req, res) => {
 const signupUser = async (req, res) => {
 	
 	try {
-		const { email, password, favorites } = req.body;
+		const { email, password, favCount, favorites } = req.body;
 		const user = await User.signup(email, password);
 		const token = createToken(user._id)
 			
 		console.log(` ${email} signed up`)
-		res.status(200).json({email, token, favCount, favorites: [], message: "signed up"})
+		res.status(200).json({email, token, favCount: 0, favorites: [], message: "signed up"})
 	} catch (error) {
 		res.status(400).json({ error: error.message })
 	}
