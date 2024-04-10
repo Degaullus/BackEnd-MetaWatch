@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 
+const Tournament = require('./Tournament');
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -14,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     favorites: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Favorite'
+        ref: 'TournamentResult'
     }]
 });
 
