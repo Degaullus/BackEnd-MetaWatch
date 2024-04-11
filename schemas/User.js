@@ -50,12 +50,6 @@ userSchema.statics.signup = async function(username, email, password) {
     if (!validator.isEmail(email)) { // Corrected syntax
         throw new Error("Invalid Email");
     }
-    
-    // if (!validator.isStrongPassword(password, {
-    //     minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1
-    // })) {
-    //     throw new Error("Make sure to use at least 8 characters, one upper case, one lower case, a number, a symbol");
-    // }
 
     if (password.length < 6) { // Example: only check for a minimum length of 6 characters
         throw new Error("Password must be at least 6 characters long");
