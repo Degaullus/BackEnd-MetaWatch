@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
 	
 	const favCount = userWithFavorites.favorites.length;
 			
-		res.status(200).json({email, token, favCount, favorites: favoriteTournamentIds, message: "logged in"})
+		res.status(200).json({username, email, token, favCount, favorites: favoriteTournamentIds, message: "logged in"})
 	} catch (error) {
 		res.status(400).json({ error: error.message })
 	}
