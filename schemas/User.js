@@ -9,12 +9,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        validate: {
-            validator: function(v) {
-                return /^[a-zA-Z0-9]+$/i.test(v) && v.length >= 3 && v.length <= 30;
-            },
-            message: props => `${props.value} is not a valid username. Only alphanumeric characters are allowed, and the length must be between 3 and 30 characters.`
-        }
+
     },
     email: {
         type: String,
@@ -42,12 +37,12 @@ const favoriteSchema = new mongoose.Schema({
     }
 });
 
-// to create a new method for the signup
+// SIGNUP                   SIGNUP                  SIGNUP
 userSchema.statics.signup = async function(username, email, password) {
     if (!username || !email || !password) {
         throw new Error("All fields must be filled");
     }
-    
+
     if (!validator.isEmail(email)) {
         throw new Error("Invalid Email");
     }
@@ -56,19 +51,30 @@ userSchema.statics.signup = async function(username, email, password) {
         throw new Error("Password must be at least 6 characters long");
     }
 
-    const emailOrUsernameExists = await this.findOne({ $or: [{ email }, { username }] });
-    
-    if (emailOrUsernameExists) {
-        throw new Error('Email or username already in use');
+    // Check if username or email already exists
+    const existingUser = await this.findOne({
+        $or: [{ email }, { username }]
+    });
+
+    if (existingUser) {
+        if (existingUser.email === email) {
+            throw new Error('Email already in use');
+        }
+        if (existingUser.username === username) {
+            throw new Error('Username already in use');
+        }
     }
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    
+
+    // Create a new user with both username and email
     const user = await this.create({ username, email, password: hash });
     return user;
-}
+};
 
+
+// LOGIN                   LOGIN                  LOGIN
 userSchema.statics.login = async function(identifier, password) {
     if (!identifier || !password) {
         throw new Error("All fields must be filled");
