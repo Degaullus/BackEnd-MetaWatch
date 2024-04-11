@@ -39,7 +39,7 @@ const signupUser = async (req, res) => {
 	
 	try {
 		const { username, email, password, favCount, favorites } = req.body;
-		const user = await User.signup(email, password);
+		const user = await User.signup(username, email, password);
 		const token = createToken(user._id)
 			
 		console.log(` ${email} signed up`)
