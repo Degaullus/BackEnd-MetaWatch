@@ -3,7 +3,7 @@ const { User } = require("../schemas/User");
 const addFavorite = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { addedFavorite } = req.body;
+        const { id } = req.params;
 
         const user = await User.findById(userId);
         if (!user) {
@@ -12,7 +12,7 @@ const addFavorite = async (req, res) => {
             });
         }
         
-        const result = await user.addFavorite(addedFavorite);
+        const result = await user.addFavorite(id);
         // console.log(result);
         return res.status(200).json(result);
     } catch (error) {
@@ -25,8 +25,14 @@ const addFavorite = async (req, res) => {
 
 const remFavorite = async (req, res) => {
     try {
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not found or not authenticated' });
+        }
+        
+        console.log("Removing favorite ID:", req.body.removedFavorite); // Check the incoming data
+
         const userId = req.user._id;
-        const { removedFavorite } = req.body;
+        const { id } = req.params;
 
         const user = await User.findById(userId);
         if (!user) {
@@ -35,10 +41,11 @@ const remFavorite = async (req, res) => {
             });
         }
 
-        const result = await user.remFavorite(removedFavorite);
-        console.log(result);
+        const result = await user.remFavorite(id);
+        console.log("Result:", result); // See the output of the operation
         return res.status(200).json(result);
     } catch (error) {
+        console.error("Error removing favorite:", error);
         res.status(500).json({
             message: error.message || "An unknown error occurred",
         });
