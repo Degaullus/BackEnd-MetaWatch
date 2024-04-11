@@ -9,7 +9,6 @@ const createToken = (id) => {
 
 const loginUser = async (req, res) => {
 	try {
-		console.log('Received signup data: ', req.body)
 			const { username, email, password } = req.body; // Updated to receive username and email separately
 
 			const identifier = username || email; // Determine which identifier to use
