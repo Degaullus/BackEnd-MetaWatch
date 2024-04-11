@@ -9,34 +9,43 @@ const createToken = (id) => {
 
 const loginUser = async (req, res) => {
 	try {
-			const { identifier, password } = req.body; // Use a single field for either username or email
+		console.log('Received signup data: ', req.body)
+			const { username, email, password } = req.body; // Updated to receive username and email separately
 
-			const userVerification = await User.login(identifier, password); // Verify user's identifier and password
+			const identifier = username || email; // Determine which identifier to use
+			const userVerification = await User.login(identifier, password);
+
 			if (!userVerification) {
 					throw new Error('Authentication failed');
 			}
-			
-			// Populate favorites for the verified user
+
 			const userWithFavorites = await User.findById(userVerification._id).populate('favorites');
 			if (!userWithFavorites) {
 					throw new Error('User not found');
 			}
 
 			const token = createToken(userWithFavorites._id);
-			
-			// Mapping through favorites to get tournament IDs if needed
 			const favoriteTournamentIds = userWithFavorites.favorites.map(fav => fav._id.toString());
 			const favCount = userWithFavorites.favorites.length;
-							
-			res.status(200).json({ username: userWithFavorites.username, email: userWithFavorites.email, token, favCount, favorites: favoriteTournamentIds, message: "logged in" })
+
+			res.status(200).json({
+					username: userWithFavorites.username,
+					email: userWithFavorites.email,
+					token,
+					favCount,
+					favorites: favoriteTournamentIds,
+					message: "logged in successfully"
+			});
 	} catch (error) {
-			res.status(400).json({ error: error.message })
+			res.status(400).json({ error: error.message, message: "Failed to log in" });
 	}
-}
+};
+
 
 const signupUser = async (req, res) => {
 	
 	try {
+		console.log(req.body)
 		const { username, email, password, favCount, favorites } = req.body;
 		const user = await User.signup(username, email, password);
 		const token = createToken(user._id)
