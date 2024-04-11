@@ -4,7 +4,7 @@ const { addFavorite, remFavorite } = require("../controllers/Favorite");
 
 const app = express.Router();
 
-app.post("/add", addFavorite);
-app.post("/remove", remFavorite);
+app.post("/add/:id", addFavorite);
+app.post("/rem/:id", remFavorite);
 
 module.exports = app;
