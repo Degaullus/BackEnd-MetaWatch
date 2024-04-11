@@ -37,32 +37,29 @@ const favoriteSchema = new mongoose.Schema({
 });
 
 // to create a new method for the signup
-userSchema.statics.signup = async function(username, email, password) {
-    const exists = await this.findOne({ email }); // Fixed method call
-    
-    if (exists) {
-        throw new Error('Email already in use');
-    }
-    
-    if (!email || !password) { // Corrected syntax
+userSchema.statics.login = async function(identifier, password) {
+    if (!identifier || !password) {
         throw new Error("All fields must be filled");
     }
-    if (!validator.isEmail(email)) { // Corrected syntax
-        throw new Error("Invalid Email");
+
+    // Attempt to find the user by email or username
+    const user = await this.findOne({ 
+        $or: [{ email: identifier }, { username: identifier }] 
+    });
+
+    if (!user) {
+        throw new Error("Username/email is incorrect or it doesn't exist");
     }
 
-    if (password.length < 6) { // Example: only check for a minimum length of 6 characters
-        throw new Error("Password must be at least 6 characters long");
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+        throw new Error("Incorrect password");
     }
 
-    const salt = await bcrypt.genSalt(10);
-    
-    const hash = await bcrypt.hash(password, salt);
-    
-    const user = await this.create({username,  email, password: hash });
-    
     return user;
 }
+
 
 userSchema.statics.login = async function(email, password) {
     if(!email || !password) {
