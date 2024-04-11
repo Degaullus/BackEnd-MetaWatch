@@ -37,7 +37,7 @@ const favoriteSchema = new mongoose.Schema({
 });
 
 // to create a new method for the signup
-userSchema.statics.signup = async function(email, password) {
+userSchema.statics.signup = async function(username, email, password) {
     const exists = await this.findOne({ email }); // Fixed method call
     
     if (exists) {
@@ -65,7 +65,7 @@ userSchema.statics.signup = async function(email, password) {
     
     const hash = await bcrypt.hash(password, salt);
     
-    const user = await this.create({ email, password: hash });
+    const user = await this.create({username,  email, password: hash });
     
     return user;
 }
