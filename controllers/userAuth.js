@@ -10,9 +10,9 @@ const createToken = (id) => {
 const loginUser = async (req, res) => {
 	
 	try {
-		const { email, password } = req.body
+		const { username, email, password } = req.body
 
-		const userVerification = await User.login(email, password); // Verify user's email and password
+		const userVerification = await User.login(username, email, password); // Verify user's email and password
 		if (!userVerification) {
 				throw new Error('Authentication failed');
 		}
