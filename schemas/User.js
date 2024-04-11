@@ -40,8 +40,15 @@ const favoriteSchema = new mongoose.Schema({
 userSchema.statics.signup = async function(username, email, password) {
     const exists = await this.findOne({ email }); // Fixed method call
     
-    if (exists) {
+    const emailExists = await this.findOne({ email });
+    const usernameExists = await this.findOne({ username });
+    
+    if (emailExists) {
         throw new Error('Email already in use');
+    }
+    
+    if (usernameExists) {
+        throw new Error('Username already in use');
     }
     
     if (!email || !password) { // Corrected syntax
