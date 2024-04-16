@@ -1,5 +1,4 @@
-const express = require('express');
-
+const express = require("express");
 const { getDB, getTournamentsById } = require("../controllers/getDB");
 
 const app = express.Router();
