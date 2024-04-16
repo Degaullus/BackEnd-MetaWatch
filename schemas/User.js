@@ -85,10 +85,13 @@ userSchema.statics.login = async function (identifier, password) {
 
 userSchema.methods.remFavorite = async function (removedFavorite) {
   // Ensure `removedFavorite` is converted to an ObjectId, if necessary
-  const ObjectId = require("mongoose").Types.ObjectId;
-  removedFavorite = new ObjectId(removedFavorite);
+  //   const ObjectId = require("mongoose").Types.ObjectId;
+  //   removedFavorite = new ObjectId(removedFavorite);
 
-  this.favorites = this.favorites.filter((fav) => !fav.equals(removedFavorite));
+  console.log("Removed favorite:", removedFavorite);
+  console.log("Favorites:", this.favorites);
+  this.favorites = this.favorites.filter((fav) => fav !== removedFavorite);
+  console.log("New favorites:", this.favorites);
   const changesMade = this.isModified("favorites");
   await this.save();
   return changesMade
